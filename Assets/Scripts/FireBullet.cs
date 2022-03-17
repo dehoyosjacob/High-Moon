@@ -7,6 +7,7 @@ public class FireBullet : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] Transform bulletSpawn;
     [SerializeField] PlayerMovement player;
+    [SerializeField] Level01Controller lControl;
 
     // Start is called before the first frame update
     void Start()
@@ -18,13 +19,23 @@ public class FireBullet : MonoBehaviour
     {
         if(Input.GetKeyUp(KeyCode.H) && player != null)
         {
-            FireGun();
-            Debug.Log("Fired the gun!");
+            if(lControl.bullets > 0)
+            {
+                FireGun();
+                Debug.Log("Fired the gun!");
+            }
+
+            else
+            {
+                Debug.Log("Out of ammo!");
+            }
+            
         }
     }
 
     private void FireGun()
     {
+        lControl.bulletAdjust(false, 1);
         Instantiate(bullet, bulletSpawn.position, transform.rotation);
     }
 }

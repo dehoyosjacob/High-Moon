@@ -5,11 +5,15 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float _dashTime;
+    [SerializeField] GameObject playerFront;
+    [SerializeField] GameObject playerBack;
+    [SerializeField] GameObject gun;
 
     Rigidbody2D rbody;
     float hMove;
     float vMove;
     bool facingRight = true;
+    bool facingCamera = true;
 
     public float speed = 10f;
 
@@ -17,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rbody = GetComponent<Rigidbody2D>();
+        playerFront.SetActive(true);
+        playerBack.SetActive(false);
     }
 
     // Update is called once per frame
@@ -37,18 +43,39 @@ public class PlayerMovement : MonoBehaviour
 
         if (hMove > 0 && !facingRight)
         {
+            if (vMove > 0)
+            {
+                return;
+            }
             Flip();
         }
 
         if (hMove < 0 && facingRight)
         {
+            if(vMove > 0)
+            {
+                return;
+            }
             Flip();
+        }
+
+        if(vMove > 0)
+        {
+            playerFront.SetActive(false);
+            playerBack.SetActive(true);
+        }
+
+        if(vMove < 0)
+        {
+            playerBack.SetActive(false);
+            playerFront.SetActive(true);
         }
     }
 
     private void Flip()
     {
-        gameObject.transform.Rotate(0f,180f,0f);
+        gameObject.transform.Rotate(0f, 180f, 0f);
+        
 
         facingRight = !facingRight;
     }
