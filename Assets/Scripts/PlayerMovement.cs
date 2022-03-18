@@ -8,12 +8,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject playerFront;
     [SerializeField] GameObject playerBack;
     [SerializeField] GameObject gun;
+    [SerializeField] Level01Controller levelController;
+    [SerializeField] Animator animator;
 
     Rigidbody2D rbody;
     float hMove;
     float vMove;
     bool facingRight = true;
     bool facingCamera = true;
+    
 
     public float speed = 10f;
 
@@ -28,8 +31,15 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        hMove = Input.GetAxisRaw("Horizontal");
-        vMove = Input.GetAxisRaw("Vertical");
+        
+        if(levelController.justLaunched == false)
+        {
+            hMove = Input.GetAxisRaw("Horizontal");
+            vMove = Input.GetAxisRaw("Vertical");
+
+            animator.SetFloat("Speed", Mathf.Abs(hMove));
+        }
+        
 
         if(Input.GetKeyUp(KeyCode.L))
         {

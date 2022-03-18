@@ -7,15 +7,24 @@ public class Level01Controller : MonoBehaviour
 {
     [SerializeField] Text bullets_txt;
     [SerializeField] Text grenades_txt;
+    [SerializeField] GameObject hamlet;
+    [SerializeField] GameObject littleRed;
+    [SerializeField] GameObject dialogueBox;
+    [SerializeField] GameObject line1;
+    [SerializeField] GameObject line2;
+    [SerializeField] GameObject line3;
+    [SerializeField] GameObject gun;
 
     bool dracIsAlive = true;
     bool playerIsAlive = true;
     bool hasWon = false;
     bool hasLost = false;
+    public int dialogueCount = 1;
 
 
     public int bullets;
     public int grenades;
+    public bool justLaunched;
 
     //temp variables
     int playerHealth = 10;
@@ -25,11 +34,36 @@ public class Level01Controller : MonoBehaviour
     {
         bullets = 20;
         grenades = 5;
+        justLaunched = true;
+        dialogueBox.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(justLaunched == true)
+        {
+           // dialogueBox.SetActive(true);
+            DisplayDialogue(dialogueCount);
+            gun.SetActive(false);
+
+            if (Input.GetKeyUp(KeyCode.H))
+            {
+                dialogueCount++;
+                if(dialogueCount <= 4)
+                {
+                    DisplayDialogue(dialogueCount);
+                }
+                
+            }
+        }
+
+        else if(justLaunched == false)
+        {
+            dialogueBox.SetActive(false);
+        }
+        
+
         if (dracIsAlive == false && playerIsAlive == true)
         {
             hasWon = true;
@@ -100,5 +134,36 @@ public class Level01Controller : MonoBehaviour
         }
 
         grenades_txt.text = "Grenades :: " + grenades.ToString();
+    }
+
+    private void DisplayDialogue(int lineNumber)
+    {
+        if(dialogueCount == 1)
+        {
+            line1.SetActive(true);
+            line2.SetActive(false);
+            line3.SetActive(false);
+        }
+
+        else if(dialogueCount == 2)
+        {
+            line1.SetActive(false);
+            line2.SetActive(true);
+            line3.SetActive(false);
+        }
+
+        else if (dialogueCount == 3)
+        {
+            line1.SetActive(false);
+            line2.SetActive(false);
+            line3.SetActive(true);
+        }
+
+        else if (dialogueCount == 4)
+        {
+            dialogueBox.SetActive(false);
+            justLaunched = false;
+            gun.SetActive(true);
+        }
     }
 }

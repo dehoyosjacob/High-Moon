@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
     [SerializeField] string SceneName;
+
+
+    public bool enableHam;
     
     void Update()
     {
@@ -13,6 +16,8 @@ public class SceneLoader : MonoBehaviour
         {
             LoadScene(SceneName);
         }
+
+        
     }
 
     public void LoadScene(string sceneName)
