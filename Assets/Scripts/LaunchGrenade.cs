@@ -7,6 +7,7 @@ public class LaunchGrenade : MonoBehaviour
     [SerializeField] GameObject grenade;
     [SerializeField] Transform bulletSpawn;
     [SerializeField] PlayerMovement player;
+    [SerializeField] Level01Controller lControl;
 
     // Start is called before the first frame update
     void Start()
@@ -18,13 +19,23 @@ public class LaunchGrenade : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.J))
         {
-            DropBomb();
-            Debug.Log("Launched the grenade!");
+            if(lControl.grenades > 0)
+            {
+                DropBomb();
+                Debug.Log("Launched the grenade!");
+            }
+
+            else
+            {
+                Debug.Log("Out of ammo!");
+            }
+            
         }
     }
 
     private void DropBomb()
     {
+        lControl.grenadeAdjust(false,1);
         Instantiate(grenade, bulletSpawn.position, transform.rotation);
     }
 }
