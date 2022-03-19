@@ -8,7 +8,8 @@ public class FireBullet : MonoBehaviour
     [SerializeField] Transform bulletSpawn;
     [SerializeField] PlayerMovement player;
     [SerializeField] Level01Controller lControl;
-
+    [SerializeField] AudioSource gunAudio;
+ 
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +36,7 @@ public class FireBullet : MonoBehaviour
 
     private void FireGun()
     {
+        gunAudio.Play();
         lControl.bulletAdjust(false, 1);
         Instantiate(bullet, bulletSpawn.position, transform.rotation);
     }

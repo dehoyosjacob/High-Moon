@@ -8,7 +8,6 @@ public class CharacterSelect : MonoBehaviour
     [SerializeField] GameObject littleRed;
 
     public bool isHam;
-    public bool isRed;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +17,6 @@ public class CharacterSelect : MonoBehaviour
             hamlet.SetActive(true);
             littleRed.SetActive(false);
             isHam = true;
-            isRed = false;
         }
         
     }
@@ -31,15 +29,13 @@ public class CharacterSelect : MonoBehaviour
             hamlet.SetActive(false);
             littleRed.SetActive(true);
             isHam = false;
-            isRed = true;
         }
 
-        if(Input.GetKeyUp(KeyCode.A) && isRed && littleRed != null)
+        if(Input.GetKeyUp(KeyCode.A) && !isHam && littleRed != null)
         {
             littleRed.SetActive(false);
             hamlet.SetActive(true);
             isHam = true;
-            isRed = false;
         }
     }
 }

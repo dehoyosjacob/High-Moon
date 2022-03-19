@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject gun;
     [SerializeField] Level01Controller levelController;
     [SerializeField] Animator animator;
+    [SerializeField] AudioSource dashAudio;
 
     Rigidbody2D rbody;
     float hMove;
@@ -37,12 +38,13 @@ public class PlayerMovement : MonoBehaviour
             hMove = Input.GetAxisRaw("Horizontal");
             vMove = Input.GetAxisRaw("Vertical");
 
-            animator.SetFloat("Speed", Mathf.Abs(hMove));
+            animator.SetFloat("Speed", Mathf.Abs(hMove) + Mathf.Abs(vMove));
         }
         
 
         if(Input.GetKeyUp(KeyCode.L))
         {
+            dashAudio.Play();
             StartCoroutine(DashTime(_dashTime));
         }
     }
