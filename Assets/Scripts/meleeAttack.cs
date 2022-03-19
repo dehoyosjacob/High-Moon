@@ -6,6 +6,7 @@ public class meleeAttack : MonoBehaviour
 {
     [SerializeField] GameObject stake;
     [SerializeField] float _attackTime;
+    [SerializeField] AudioSource steakAudio;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,7 @@ public class meleeAttack : MonoBehaviour
     {
         if(Input.GetKeyUp(KeyCode.K))
         {
+            steakAudio.Play();
             StartCoroutine(attackTime(_attackTime));
         }
     }

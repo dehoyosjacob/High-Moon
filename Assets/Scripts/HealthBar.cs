@@ -14,10 +14,10 @@ public class HealthBar : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyUp(KeyCode.V))
+        /*if(Input.GetKeyUp(KeyCode.V))
         {
             TakeDamage(20);
-        }
+        }*/
     }
 
     public void SetMaxHealth(int health)
