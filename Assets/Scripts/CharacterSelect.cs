@@ -6,6 +6,8 @@ public class CharacterSelect : MonoBehaviour
 {
     [SerializeField] GameObject hamlet;
     [SerializeField] GameObject littleRed;
+    [SerializeField] GameObject hamSelection;
+    [SerializeField] GameObject redSelection;
 
     public bool isHam;
 
@@ -15,8 +17,11 @@ public class CharacterSelect : MonoBehaviour
         if(hamlet != null && littleRed != null)
         {
             hamlet.SetActive(true);
+            hamSelection.SetActive(true);
             littleRed.SetActive(false);
+            redSelection.SetActive(false);
             isHam = true;
+            
         }
         
     }
@@ -27,14 +32,18 @@ public class CharacterSelect : MonoBehaviour
         if(Input.GetKeyUp(KeyCode.D) && isHam && hamlet != null)
         {
             hamlet.SetActive(false);
+            hamSelection.SetActive(false);
             littleRed.SetActive(true);
+            redSelection.SetActive(true);
             isHam = false;
         }
 
         if(Input.GetKeyUp(KeyCode.A) && !isHam && littleRed != null)
         {
             littleRed.SetActive(false);
+            redSelection.SetActive(false);
             hamlet.SetActive(true);
+            hamSelection.SetActive(true);
             isHam = true;
         }
     }
