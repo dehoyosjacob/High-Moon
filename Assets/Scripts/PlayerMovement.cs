@@ -7,7 +7,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float _dashTime;
     [SerializeField] GameObject gun;
     [SerializeField] Level01Controller levelController;
-    [SerializeField] Animator animator;
+    [SerializeField] GameObject hamlet;
+    [SerializeField] GameObject littleRed;
+    [SerializeField] Animator hamAnim;
+    [SerializeField] Animator redAnim;
     [SerializeField] AudioSource dashAudio;
 
     Rigidbody2D rbody;
@@ -16,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     bool facingRight = true;
     bool facingCamera = true;
     bool isDashing = false;
+
+    public bool isHam;
     
 
     public float speed = 10f;
@@ -24,33 +29,48 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rbody = GetComponent<Rigidbody2D>();
+        if(isHam)
+        {
+            hamlet.SetActive(true);
+            littleRed.SetActive(false);
+        }
+
+        else if(!isHam)
+        {
+            hamlet.SetActive(false);
+            littleRed.SetActive(true);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        
-    }
 
-    private void FixedUpdate()
-    {
         if (levelController.justLaunched == false)
         {
             hMove = Input.GetAxisRaw("Horizontal");
             vMove = Input.GetAxisRaw("Vertical");
 
-            animator.SetFloat("Speed", Mathf.Abs(hMove) + Mathf.Abs(vMove));
+            hamAnim.SetFloat("Speed", Mathf.Abs(hMove) + Mathf.Abs(vMove));
+            redAnim.SetFloat("Speed", Mathf.Abs(hMove) + Mathf.Abs(vMove));
         }
 
 
+
+
+        rbody.velocity = new Vector2(hMove * speed, vMove * speed);
         if (Input.GetKeyUp(KeyCode.L) && !isDashing && (Mathf.Abs(hMove) > 0 || Mathf.Abs(vMove) > 0))
         {
+            Debug.Log("begin dash");
             dashAudio.Play();
             StartCoroutine(DashTime(_dashTime));
         }
 
-        rbody.velocity = new Vector2(hMove * speed, vMove * speed);
+    }
+
+    private void FixedUpdate()
+    {
+        
 
         if (hMove > 0 && !facingRight)
         {
@@ -81,15 +101,18 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator DashTime(float seconds)
     {
-        
-        animator.SetBool("isRunning", true);
-        speed = 20f;
         isDashing = true;
+        Debug.Log("started coroutine");
+        hamAnim.SetBool("isRunning", true);
+        redAnim.SetBool("isRunning", true);
+        speed = 20f;
+        
 
         yield return new WaitForSeconds(seconds);
 
         speed = 10f;
-        animator.SetBool("isRunning", false);
+        hamAnim.SetBool("isRunning", false);
+        redAnim.SetBool("isRunning", false);
         isDashing = false;
     }
 }
