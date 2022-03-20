@@ -12,11 +12,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] float deathTime = 1f;
     [SerializeField] Animator enemyAnim;
     [SerializeField] GameObject enemy;
-    [SerializeField] GameObject healthPickup;
-    [SerializeField] GameObject ammoPickup;
 
     int enemyHealth;
-    float rNum;
     float distanceToPlayer;
     bool gunReady;
     bool isAlive = true;
@@ -37,8 +34,7 @@ public class EnemyController : MonoBehaviour
         if (enemyHealth <= 0 && isAlive)
         {
             isAlive = false;
-            rNum = Random.Range(0f, 3f);
-            SelectDrop(rNum);
+
             enemyAnim.SetBool("isDead", true);
             Debug.Log("Killed enemy");
             Destroy(gameObject, 1f);
@@ -92,7 +88,6 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(GunCoolDown(cooldownTime));
     }
 
-
     IEnumerator GunCoolDown(float seconds)
     {
         gunReady = false;
@@ -100,23 +95,5 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(seconds);
 
         gunReady = true;
-    }
-
-    private void SelectDrop(float selection)
-    {
-        if (selection < 1)
-        {
-            return;
-        }
-
-        else if (selection >= 1 && selection < 2)
-        {
-            Instantiate(healthPickup, this.transform.position, this.transform.rotation);
-        }
-
-        else if (selection >= 2 && selection < 3)
-        {
-            Instantiate(ammoPickup, this.transform.position, this.transform.rotation);
-        }
     }
 }
