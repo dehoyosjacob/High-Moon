@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Level01Controller : MonoBehaviour
 {
     [SerializeField] Text bullets_txt;
-    [SerializeField] Text grenades_txt;
+    //[SerializeField] Text grenades_txt;
     [SerializeField] GameObject hamlet;
     [SerializeField] GameObject littleRed;
     [SerializeField] GameObject dialogueBox;
@@ -23,7 +23,7 @@ public class Level01Controller : MonoBehaviour
 
 
     public int bullets;
-    public int grenades;
+    //public int grenades;
     public bool justLaunched;
 
     //temp variables
@@ -33,7 +33,7 @@ public class Level01Controller : MonoBehaviour
     void Start()
     {
         bullets = 20;
-        grenades = 5;
+        //grenades = 5;
         justLaunched = true;
         dialogueBox.SetActive(true);
     }
@@ -115,7 +115,7 @@ public class Level01Controller : MonoBehaviour
         bullets_txt.text = "Bullets :: " + bullets.ToString();
     }
 
-    public void grenadeAdjust(bool isIncreasing, int increment)
+  /*  public void grenadeAdjust(bool isIncreasing, int increment)
     {
         if (isIncreasing)
         {
@@ -135,7 +135,7 @@ public class Level01Controller : MonoBehaviour
 
         grenades_txt.text = "Grenades :: " + grenades.ToString();
     }
-
+  */
     private void DisplayDialogue(int lineNumber)
     {
         if(dialogueCount == 1)
