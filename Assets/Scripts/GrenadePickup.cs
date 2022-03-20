@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GrenadePickup : MonoBehaviour
 {
-    [SerializeField] Level01Controller lControl;
+    /*[SerializeField] Level01Controller lControl;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -15,5 +15,5 @@ public class GrenadePickup : MonoBehaviour
             lControl.grenadeAdjust(true, 1);
             Destroy(gameObject);
         }
-    }
+    }*/
 }

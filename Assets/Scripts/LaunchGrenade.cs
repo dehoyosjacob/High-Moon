@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LaunchGrenade : MonoBehaviour
 {
-    [SerializeField] GameObject grenade;
+    /*[SerializeField] GameObject grenade;
     [SerializeField] Transform bulletSpawn;
     [SerializeField] PlayerMovement player;
     [SerializeField] Level01Controller lControl;
@@ -33,9 +33,10 @@ public class LaunchGrenade : MonoBehaviour
         }
     }
 
-    private void DropBomb()
+    /*private void DropBomb()
     {
         lControl.grenadeAdjust(false,1);
         Instantiate(grenade, bulletSpawn.position, transform.rotation);
     }
+    */
 }
