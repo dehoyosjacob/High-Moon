@@ -5,8 +5,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float _dashTime;
-    [SerializeField] GameObject playerFront;
-    [SerializeField] GameObject playerBack;
     [SerializeField] GameObject gun;
     [SerializeField] Level01Controller levelController;
     [SerializeField] Animator animator;
@@ -17,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     float vMove;
     bool facingRight = true;
     bool facingCamera = true;
+    bool isDashing = false;
     
 
     public float speed = 10f;
@@ -25,32 +24,32 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rbody = GetComponent<Rigidbody2D>();
-        playerFront.SetActive(true);
-        playerBack.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        if(levelController.justLaunched == false)
+        
+    }
+
+    private void FixedUpdate()
+    {
+        if (levelController.justLaunched == false)
         {
             hMove = Input.GetAxisRaw("Horizontal");
             vMove = Input.GetAxisRaw("Vertical");
 
             animator.SetFloat("Speed", Mathf.Abs(hMove) + Mathf.Abs(vMove));
         }
-        
 
-        if(Input.GetKeyUp(KeyCode.L))
+
+        if (Input.GetKeyUp(KeyCode.L) && !isDashing && (Mathf.Abs(hMove) > 0 || Mathf.Abs(vMove) > 0))
         {
             dashAudio.Play();
             StartCoroutine(DashTime(_dashTime));
         }
-    }
 
-    private void FixedUpdate()
-    {
         rbody.velocity = new Vector2(hMove * speed, vMove * speed);
 
         if (hMove > 0 && !facingRight)
@@ -70,18 +69,6 @@ public class PlayerMovement : MonoBehaviour
             }
             Flip();
         }
-
-        if(vMove > 0)
-        {
-            playerFront.SetActive(false);
-            playerBack.SetActive(true);
-        }
-
-        if(vMove < 0)
-        {
-            playerBack.SetActive(false);
-            playerFront.SetActive(true);
-        }
     }
 
     private void Flip()
@@ -94,10 +81,15 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator DashTime(float seconds)
     {
+        
+        animator.SetBool("isRunning", true);
         speed = 20f;
+        isDashing = true;
 
         yield return new WaitForSeconds(seconds);
 
         speed = 10f;
+        animator.SetBool("isRunning", false);
+        isDashing = false;
     }
 }

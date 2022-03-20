@@ -265,8 +265,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterSelect: CharacterSelection
-  hamVersion: Level01
-  redVersion: Level01
+  hamVersion: hamVersion
+  redVersion: hamVersion
   playersChoice: {fileID: 0}
 --- !u!82 &453002495
 AudioSource:

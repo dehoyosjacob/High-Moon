@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 30
-  timeDestroy: 2.5
+  timeDestroy: 1
 --- !u!114 &5027160757046720111
 MonoBehaviour:
   m_ObjectHideFlags: 0

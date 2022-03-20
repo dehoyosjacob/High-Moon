@@ -1,23 +1,71 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class EnemyController : MonoBehaviour
 {
+    [SerializeField] GameObject player;
+    [SerializeField] float rotationSpeed;
+    [SerializeField] GameObject bullet;
+    [SerializeField] float cooldownTime = 2f;
+    [SerializeField] float deathTime = 1f;
+    [SerializeField] Animator enemyAnim;
+    [SerializeField] GameObject enemy;
+
     int enemyHealth;
+    float distanceToPlayer;
+    bool gunReady;
+    bool isAlive = true;
 
     // Start is called before the first frame update
     void Start()
     {
         enemyHealth = 20;
+        gunReady = true;
+        GetComponent<AIPath>().enabled = false;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if(enemyHealth <= 0)
+        
+
+        if (enemyHealth <= 0 && isAlive)
         {
-            Destroy(this.gameObject);
+            isAlive = false;
+
+            enemyAnim.SetBool("isDead", true);
+            Debug.Log("Killed enemy");
+            Destroy(gameObject, 1f);
+            enemyAnim.SetBool("isWalking", false);
+            GetComponent<AIPath>().enabled = false;
+
+        }
+
+        //enemyAnim.SetBool("isDead", false);
+
+        distanceToPlayer = Vector2.Distance(this.transform.position, player.transform.position);
+
+        if(distanceToPlayer <= 20)
+        {
+            FacePlayer();
+            GetComponent<AIPath>().enabled = true;
+            enemyAnim.SetBool("isWalking", true);
+        }
+
+        else if(distanceToPlayer > 20 && isAlive)
+        {
+            GetComponent<AIPath>().enabled = false;
+            enemyAnim.SetBool("isWalking", false);
+        }
+
+        if(distanceToPlayer <= 10 && gunReady == true && isAlive)
+        {
+            //Debug.Log("Player in range");
+            Shoot();
+            enemyAnim.SetBool("isWalking", false);
+
         }
     }
 
@@ -26,12 +74,26 @@ public class EnemyController : MonoBehaviour
         enemyHealth -= dmg;
     }
 
-    /*private void OnTriggerEnter2D(Collider2D other)
+    private void FacePlayer()
     {
-        Debug.Log("Bullet collided");
-        if(other.CompareTag("Bullet"))
-        {
-            Damage(5);
-        }
-    }*/
+        Vector2 direction = player.transform.position - this.transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+    }
+
+    private void Shoot()
+    {
+        Instantiate(bullet, this.transform.position, this.transform.rotation);
+        StartCoroutine(GunCoolDown(cooldownTime));
+    }
+
+    IEnumerator GunCoolDown(float seconds)
+    {
+        gunReady = false;
+
+        yield return new WaitForSeconds(seconds);
+
+        gunReady = true;
+    }
 }

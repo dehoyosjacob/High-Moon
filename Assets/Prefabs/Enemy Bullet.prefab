@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 30
-  timeDestroy: 2.5
+  timeDestroy: 1
 --- !u!114 &4130875322630658194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,3 +198,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8ee5dac650325e478e09c040454c429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 10

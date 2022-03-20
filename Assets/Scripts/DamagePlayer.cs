@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DamagePlayer : MonoBehaviour
 {
+    [SerializeField] int damage;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("Detected player");
